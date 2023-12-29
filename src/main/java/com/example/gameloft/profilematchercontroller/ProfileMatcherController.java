@@ -1,5 +1,6 @@
 package com.example.gameloft.profilematchercontroller;
 
+import com.example.gameloft.campaignservice.CampaignService;
 import com.example.gameloft.model.Campaign;
 import com.example.gameloft.model.Profile;
 import com.example.gameloft.profileservice.ProfileService;
@@ -18,6 +19,8 @@ public class ProfileMatcherController {
     private ProfileRepository profileRepository;
     @Autowired
     private ProfileService profileService;
+    @Autowired
+    private CampaignService campaignService;
 
     @GetMapping(path = "/get_clients_config")
     public List<Profile> getClients() {
@@ -26,7 +29,7 @@ public class ProfileMatcherController {
 
     @GetMapping(path = "/get_client_config/{player_id}")
     public Profile getClientById(@PathVariable String player_id) {
-        Campaign campaign = profileService.createCampaign();
+        Campaign campaign = campaignService.getCampaign();
         Profile profile = profileRepository.findById(player_id).orElse(null);
 
         if (profile != null) {
